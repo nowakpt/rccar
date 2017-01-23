@@ -6,7 +6,7 @@ SDK_ROOT := ../sdk
 PROJ_DIR := .
 
 $(OUTPUT_DIRECTORY)/nrf51422_xxac.out: \
-  LINKER_SCRIPT  := template_gcc_nrf51.ld
+  LINKER_SCRIPT  := config/memory_config_nrf51.ld
 
 # Source files common to all targets
 SRC_FILES += \
