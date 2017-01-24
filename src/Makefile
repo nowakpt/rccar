@@ -11,8 +11,16 @@ $(OUTPUT_DIRECTORY)/nrf51422_xxac.out: \
 # Source files common to all targets
 SRC_FILES += \
   $(PROJ_DIR)/main.c \
+  $(PROJ_DIR)/bluetooth.c \
   $(SDK_ROOT)/components/toolchain/gcc/gcc_startup_nrf51.S \
+  $(SDK_ROOT)/components/drivers_nrf/clock/nrf_drv_clock.c \
+  $(SDK_ROOT)/components/drivers_nrf/common/nrf_drv_common.c \
+  $(SDK_ROOT)/components/drivers_nrf/power/nrf_drv_power.c \
   $(SDK_ROOT)/components/toolchain/system_nrf51.c \
+  $(SDK_ROOT)/components/libraries/util/app_error.c \
+  $(SDK_ROOT)/components/libraries/util/app_error_weak.c \
+  $(SDK_ROOT)/components/libraries/util/app_util_platform.c \
+  $(SDK_ROOT)/components/softdevice/common/softdevice_handler/softdevice_handler.c \
 
 # Include folders common to all targets
 INC_FOLDERS += \
@@ -57,7 +65,6 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/drivers_nrf/gpiote \
   $(SDK_ROOT)/components/drivers_nrf/saadc \
   $(SDK_ROOT)/components/drivers_nrf/power \
-  $(SDK_ROOT)/components/drivers_nrf/nrf_soc_nosd \
   $(SDK_ROOT)/components/toolchain \
   $(SDK_ROOT)/external/segger_rtt \
   $(SDK_ROOT)/components/boards \
@@ -75,14 +82,20 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/drivers_nrf/qdec \
   $(SDK_ROOT)/components/drivers_nrf/twis_slave \
   $(SDK_ROOT)/components/libraries/log/src \
+  $(SDK_ROOT)/components/softdevice/s130/headers \
+  $(SDK_ROOT)/components/softdevice/common/softdevice_handler \
 
 # Libraries common to all targets
 LIB_FILES += \
 
 # C flags common to all targets
 CFLAGS += -DNRF51
+CFLAGS += -DBLE_STACK_SUPPORT_REQD
+CFLAGS += -DSOFTDEVICE_PRESENT
+CFLAGS += -DS130
 CFLAGS += -DNRF51422
 CFLAGS += -DSWI_DISABLE0
+CFLAGS += -D__HEAP_SIZE=0
 CFLAGS += -DBOARD_PCA10028
 CFLAGS += -mcpu=cortex-m0
 CFLAGS += -mthumb -mabi=aapcs
@@ -101,6 +114,9 @@ ASMFLAGS += -DNRF51
 ASMFLAGS += -DNRF51422
 ASMFLAGS += -DSWI_DISABLE0
 ASMFLAGS += -DBOARD_PCA10028
+ASMFLAGS += -DBLE_STACK_SUPPORT_REQD
+ASMFLAGS += -DSOFTDEVICE_PRESENT
+ASMFLAGS += -DS130
 
 # Linker flags
 LDFLAGS += -mthumb -mabi=aapcs -L $(TEMPLATE_PATH) -T$(LINKER_SCRIPT)
